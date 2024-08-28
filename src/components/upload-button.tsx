@@ -32,8 +32,8 @@ export const UploadButton = ({
           <Edit />
           {label}
         </Label>
-        <p className="text-sm text-gray-400 ml-6">
-          Recommended size is 300px * 300px, size <br /> less than 2MB
+        <p className="text-sm text-gray-400 ml-4 mt-2">
+          O tamanho recomendado é 300px * 300px, menor que 2 MB
         </p>
       </div>
       <ErrorMessage

@@ -6,7 +6,7 @@ import { Button } from '../ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useDomain } from '@/hooks/use-domain';
-import { AppDrawer } from '../Drawer';
+import { AppDrawer } from '../drawer';
 import { UploadButton } from '../upload-button';
 
 type DomainMenuProps = {
@@ -26,11 +26,16 @@ export const DomainMenu = ({ domains, min }: DomainMenuProps) => {
 
   return (
     <div className={cn('flex flex-col gap-3', min ? 'mt-6' : 'mt-3')}>
-      <div className="flex justify-between w-full items-center">
+      <div
+        className={cn(
+          'flex w-full items-center',
+          min ? 'justify-center' : 'justify-between',
+        )}
+      >
         {!min && <p className="text-xs text-gray-500">DOMÍNIOS</p>}
         <AppDrawer
-          description="add in your domain address to integrate your chatbot"
-          title="Add your business domain"
+          title="Adicionar domínio"
+          description="Adicione seu domínio para integrar o chatbot"
           onOpen={
             <div className="cursor-pointer text-gray-500 rounded-full border-2">
               <Plus />
@@ -48,16 +53,16 @@ export const DomainMenu = ({ domains, min }: DomainMenuProps) => {
                 label="Domain"
                 name="domain"
                 errors={errors}
-                placeholder="mydomain.com"
+                placeholder="meu-dominio.com"
                 type="text"
               />
               <UploadButton
                 register={register}
-                label="Upload Icon"
+                label="Enviar ícone"
                 errors={errors}
               />
               <Button type="submit" className="w-full">
-                Add Domain
+                Adicionar
               </Button>
             </form>
           </Loader>
@@ -70,7 +75,7 @@ export const DomainMenu = ({ domains, min }: DomainMenuProps) => {
               href={`/settings/${domain.name.split('.')[0]}`}
               key={domain.id}
               className={cn(
-                'flex gap-3 hover:bg-white rounded-full transition duration-100 ease-in-out cursor-pointer ',
+                'flex gap-3 hover:bg-white items-center justify-center rounded-full transition duration-100 ease-in-out cursor-pointer ',
                 !min ? 'p-2' : 'py-2',
                 domain.name.split('.')[0] == isDomain && 'bg-white',
               )}
