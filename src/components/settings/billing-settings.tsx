@@ -8,7 +8,6 @@ import Modal from '../modal';
 
 export const BillingSettings = async () => {
   const plan = await onGetSubscriptionPlan();
-  console.log({ plan });
   const planFeatures = pricingCards.find(
     card => card.title.toUpperCase() === plan,
   )?.features;
