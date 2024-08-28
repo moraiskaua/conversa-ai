@@ -26,7 +26,7 @@ export const USER_REGISTRATION_FORM: UserRegistration[] = [
   {
     id: '3',
     inputType: 'input',
-    placeholder: 'Confirme o E-mail',
+    placeholder: 'Confirme o e-mail',
     name: 'confirmEmail',
     type: 'email',
   },
@@ -50,7 +50,7 @@ export const USER_LOGIN_FORM: UserRegistration[] = [
   {
     id: '1',
     inputType: 'input',
-    placeholder: 'Digite seu E-mail',
+    placeholder: 'E-mail',
     name: 'email',
     type: 'email',
   },

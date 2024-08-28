@@ -81,6 +81,7 @@ export const useSignUpForm = () => {
         }
       }
     } catch (error: any) {
+      setLoading(false);
       toast({ title: 'Error', description: error.errors[0].longMessage });
     }
   });
