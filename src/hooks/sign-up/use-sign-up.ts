@@ -1,3 +1,5 @@
+'use client';
+
 import { useToast } from '@/components/ui/use-toast';
 import {
   UserRegistration,
@@ -16,7 +18,7 @@ export const useSignUpForm = () => {
   const { toast } = useToast();
   const router = useRouter();
 
-  const { handleSubmit } = useForm<UserRegistration>({
+  const form = useForm<UserRegistration>({
     resolver: zodResolver(userRegistrationSchema),
     defaultValues: {
       type: 'owner',
@@ -43,7 +45,7 @@ export const useSignUpForm = () => {
     }
   };
 
-  const onSubmit = handleSubmit(async data => {
+  const onSubmit = form.handleSubmit(async data => {
     if (!isLoaded) return;
 
     try {
@@ -82,4 +84,11 @@ export const useSignUpForm = () => {
       toast({ title: 'Error', description: error.errors[0].longMessage });
     }
   });
+
+  return {
+    form,
+    loading,
+    onSubmit,
+    onGenerateOTP,
+  };
 };

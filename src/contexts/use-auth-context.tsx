@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Dispatch,
   ReactNode,
@@ -5,7 +7,7 @@ import {
   createContext,
   useContext,
   useState,
-} from "react";
+} from 'react';
 
 interface InitialValues {
   currentStep: number;
@@ -21,7 +23,7 @@ const AuthContext = createContext(initialValues);
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [currentStep, setCurrentStep] = useState<number>(
-    initialValues.currentStep
+    initialValues.currentStep,
   );
 
   return (
