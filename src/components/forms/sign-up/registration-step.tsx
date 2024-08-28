@@ -12,6 +12,11 @@ const DetailForm = dynamic(() => import('./account-details-form'), {
   loading: () => <Spinner />,
 });
 
+const OTPForm = dynamic(() => import('./otp-form'), {
+  ssr: false,
+  loading: () => <Spinner />,
+});
+
 export const RegistrationStep = () => {
   const [onOTP, setOnOTP] = useState<string>('');
   const [onUserType, setOnUserType] = useState<'owner' | 'student'>('owner');
@@ -35,5 +40,6 @@ export const RegistrationStep = () => {
     case 2:
       return <DetailForm errors={errors} register={register} />;
     case 3:
+      return <OTPForm onOTP={onOTP} setOTP={setOnOTP} />;
   }
 };
