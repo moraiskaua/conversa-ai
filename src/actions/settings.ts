@@ -1,7 +1,7 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
-import { currentUser } from '@clerk/nextjs/server';
+import { clerkClient, currentUser } from '@clerk/nextjs/server';
 
 export const onIntegrateDomain = async (domain: string, icon: string) => {
   const user = await currentUser();
@@ -144,5 +144,20 @@ export const onGetAllAccountDomains = async () => {
     return { ...domains };
   } catch {
     return { status: 400 };
+  }
+};
+
+export const onUpdatePassword = async (password: string) => {
+  try {
+    const user = await currentUser();
+    if (!user) return null;
+
+    const update = await clerkClient.users.updateUser(user.id, { password });
+
+    if (update) {
+      return { status: 200, message: 'Senha alterada com sucesso!' };
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
