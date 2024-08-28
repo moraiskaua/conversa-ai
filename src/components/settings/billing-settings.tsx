@@ -8,6 +8,7 @@ import Modal from '../modal';
 
 export const BillingSettings = async () => {
   const plan = await onGetSubscriptionPlan();
+  console.log({ plan });
   const planFeatures = pricingCards.find(
     card => card.title.toUpperCase() === plan,
   )?.features;
@@ -18,14 +19,15 @@ export const BillingSettings = async () => {
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
       <div className="lg:col-span-1">
         <Section
-          label="Billing settings"
-          message="Add payment information, upgrade and modify your plan."
+          label="Configurações de cobrança"
+          message="Adicione dados de pagamentos, faça upgrade e gerencie seu plano."
         />
       </div>
       <div className="lg:col-span-2 flex justify-start lg:justify-center ">
         <Modal
-          title="Choose A Plan"
-          description="Tell us about yourself! What do you do? Let’s tailor your experience so it best suits you."
+          title="Escolha um plano"
+          description="Conte-nos sobre você! O que você faz? Vamos personalizar a sua
+experiência para que melhor se adapte a você."
           trigger={
             plan && plan === 'STANDARD' ? (
               <Card className="border-dashed bg-cream border-gray-400 w-full cursor-pointer h-[270px] flex justify-center items-center">
@@ -34,7 +36,7 @@ export const BillingSettings = async () => {
                     <Plus className="text-gray-400" />
                   </div>
                   <CardDescription className="font-semibold">
-                    Upgrade Plan
+                    Fazer Upgrade
                   </CardDescription>
                 </CardContent>
               </Card>
@@ -53,7 +55,7 @@ export const BillingSettings = async () => {
         </Modal>
       </div>
       <div className="lg:col-span-2">
-        <h3 className="text-xl font-semibold mb-2">Current Plan</h3>
+        <h3 className="text-xl font-semibold mb-2">Plano Atual</h3>
         <p className="text-sm font-semibold">{plan?.toString()}</p>
         <div className="flex gap-2 flex-col mt-2">
           {planFeatures.map(feature => (

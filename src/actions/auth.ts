@@ -49,7 +49,7 @@ export const onLoginUser = async () => {
       });
       if (authenticated) {
         const domains = await onGetAllAccountDomains();
-        return { status: 200, user: authenticated, domain: domains };
+        return { status: 200, user: authenticated, domain: domains.domains };
       }
     } catch (error) {
       return { status: 400 };

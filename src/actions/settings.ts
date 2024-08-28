@@ -105,8 +105,8 @@ export const onGetSubscriptionPlan = async () => {
     if (plan) {
       return plan.subscription?.plan;
     }
-  } catch {
-    return { status: 400 };
+  } catch (error) {
+    return { error };
   }
 };
 
