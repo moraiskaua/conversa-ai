@@ -28,7 +28,7 @@ export const MenuItem = ({
             'flex items-center gap-2 px-1 py-2 rounded-lg my-1',
             !current
               ? 'text-gray-500'
-              : current == path
+              : current === path
               ? 'bg-white font-bold text-black'
               : 'text-gray-500',
           )}
@@ -42,9 +42,10 @@ export const MenuItem = ({
         <Link
           onClick={onSignOut}
           className={cn(
+            'flex justify-center items-center p-2',
             !current
               ? 'text-gray-500'
-              : current == path
+              : current === path
               ? 'bg-white font-bold text-black'
               : 'text-gray-500',
             'rounded-lg py-2 my-1',
