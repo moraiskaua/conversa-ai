@@ -1,7 +1,9 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
+import { supabase } from '@/lib/supabase';
 import { clerkClient, currentUser } from '@clerk/nextjs/server';
+import { randomUUID } from 'crypto';
 
 export const onIntegrateDomain = async (domain: string, icon: string) => {
   const user = await currentUser();

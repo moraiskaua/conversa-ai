@@ -1,8 +1,9 @@
 import { onIntegrateDomain } from '@/actions/settings';
 import { useToast } from '@/components/ui/use-toast';
+import { supabase } from '@/lib/supabase';
 import { addDomainSchema } from '@/schemas/settings.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { randomUUID } from 'crypto';
+import { v4 as uuidv4 } from 'uuid';
 import { usePathname, useRouter } from 'next/navigation';
 
 import { useEffect, useState } from 'react';
@@ -30,7 +31,19 @@ export const useDomain = () => {
 
   const onAddDomain = handleSubmit(async data => {
     setLoading(true);
-    const domain = await onIntegrateDomain(data.domain, data.image[0]);
+
+    const iconFileName = `${uuidv4()}-${data.image[0].name}`;
+    const filePath = `icons/${iconFileName}`;
+
+    await supabase.storage
+      .from('bucket-conversa-ai')
+      .upload(filePath, data.image[0]);
+
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from('bucket-conversa-ai').getPublicUrl(filePath);
+
+    const domain = await onIntegrateDomain(data.domain, publicUrl);
     if (domain) {
       reset();
       setLoading(false);
@@ -38,7 +51,6 @@ export const useDomain = () => {
         title: domain.status == 200 ? 'Success' : 'Error',
         description: domain.message,
       });
-      router.refresh();
     }
   });
 

@@ -23,6 +23,7 @@ type DomainMenuProps = {
 
 export const DomainMenu = ({ domains, min }: DomainMenuProps) => {
   const { register, onAddDomain, loading, errors, isDomain } = useDomain();
+  console.log({ domains });
 
   return (
     <div className={cn('flex flex-col gap-3', min ? 'mt-6' : 'mt-3')}>
@@ -80,12 +81,7 @@ export const DomainMenu = ({ domains, min }: DomainMenuProps) => {
                 domain.name.split('.')[0] == isDomain && 'bg-white',
               )}
             >
-              <Image
-                src={`https://ucarecdn.com/${domain.icon}/`}
-                alt="logo"
-                width={20}
-                height={20}
-              />
+              <Image src={domain.icon!} alt="logo" width={20} height={20} />
               {!min && <p className="text-sm">{domain.name}</p>}
             </Link>
           ))}

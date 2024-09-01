@@ -16,7 +16,11 @@ const DomainSettings = async ({ params }: DomainSettingsPageProp) => {
   return (
     <>
       <InfoBar />
-      <div className="overflow-y-auto w-full chat-window flex-1 h-0"></div>
+      <div className="overflow-y-auto w-full chat-window flex-1 h-0">
+        {params.domain}
+      </div>
     </>
   );
 };
+
+export default DomainSettings;
