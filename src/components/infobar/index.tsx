@@ -21,7 +21,10 @@ export const InfoBar = () => {
           </AvatarFallback>
         </Avatar>
         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarImage
+            src="https://github.com/moraiskaua.png"
+            alt="@moraiskaua"
+          />
         </Avatar>
       </div>
     </div>

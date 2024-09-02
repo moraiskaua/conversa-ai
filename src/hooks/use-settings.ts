@@ -121,7 +121,7 @@ export const useSettings = (id: string) => {
     }
   });
 
-  const onDeleteDomain = async (id: string) => {
+  const onDeleteDomain = async () => {
     setDeleting(true);
     const deleted = await onDeleteUserDomain(id);
 
