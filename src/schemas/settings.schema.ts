@@ -3,24 +3,24 @@ import { z } from 'zod';
 export const MAX_UPLOAD_SIZE = 1024 * 1024 * 2; // 2MB
 export const ACCEPTED_FILE_TYPES = ['image/png', 'image/jpg', 'image/jpeg'];
 
-export interface DomainSettingsProps {
+export interface DomainSettings {
   domain?: string;
   image?: any;
   welcomeMessage?: string;
 }
 
-export interface HelpDeskQuestionsProps {
+export interface HelpDeskQuestions {
   question: string;
   answer: string;
 }
 
-export interface AddProductProps {
+export interface AddProduct {
   name: string;
   image: any;
   price: string;
 }
 
-export interface FilterQuestionsProps {
+export interface FilterQuestions {
   question: string;
 }
 

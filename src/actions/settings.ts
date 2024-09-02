@@ -1,9 +1,7 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
-import { supabase } from '@/lib/supabase';
 import { clerkClient, currentUser } from '@clerk/nextjs/server';
-import { randomUUID } from 'crypto';
 
 export const onIntegrateDomain = async (domain: string, icon: string) => {
   const user = await currentUser();
@@ -204,6 +202,130 @@ export const onGetCurrentDomainInfo = async (domain: string) => {
     });
     if (userDomain) {
       return userDomain;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const onUpdateDomain = async (id: string, name: string) => {
+  try {
+    const domainAlreadyExists = prisma.domain.findFirst({
+      where: { name: { contains: name } },
+    });
+
+    if (!domainAlreadyExists) {
+      const domain = await prisma.domain.update({
+        where: { id },
+        data: {
+          name,
+        },
+      });
+
+      if (domain) {
+        return { status: 200, message: 'Domínio atualizado!' };
+      }
+
+      return { status: 400, message: 'Oops, algo deu errado.' };
+    }
+
+    return { status: 400, message: 'Esse domínio já está em uso.' };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const onChatBotImageUpdate = async (id: string, icon: string) => {
+  const user = await currentUser();
+  if (!user) return;
+
+  try {
+    const domain = await prisma.domain.update({
+      where: { id },
+      data: {
+        chatBot: {
+          update: {
+            data: {
+              icon,
+            },
+          },
+        },
+      },
+    });
+
+    if (domain) {
+      return { status: 200, message: 'Domínio atualizado!' };
+    }
+
+    return {
+      status: 400,
+      message: 'Oops, algo deu errado.',
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const onUpdateWelcomeMessage = async (
+  message: string,
+  domainId: string,
+) => {
+  const user = await currentUser();
+  if (!user) return;
+
+  try {
+    const update = await prisma.domain.update({
+      where: {
+        id: domainId,
+      },
+      data: {
+        chatBot: {
+          update: {
+            welcomeMessage: message,
+          },
+        },
+      },
+    });
+
+    if (update) {
+      return { status: 200, message: 'Mensagem atualizada!' };
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const onDeleteUserDomain = async (id: string) => {
+  const user = await currentUser();
+  if (!user) return;
+
+  try {
+    const isDomainOwner = await prisma.user.findUnique({
+      where: {
+        clerkId: user.id,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (isDomainOwner) {
+      const deletedDomain = await prisma.domain.delete({
+        where: {
+          userId: isDomainOwner.id,
+          id,
+        },
+        select: {
+          name: true,
+        },
+      });
+
+      if (deletedDomain) {
+        return {
+          status: 200,
+          message: `${deletedDomain.name} foi deletado com sucesso!`,
+        };
+      }
     }
   } catch (error) {
     console.log(error);
